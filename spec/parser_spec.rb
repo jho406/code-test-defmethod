@@ -12,5 +12,12 @@ RSpec.describe 'Parser' do
       results = Parser.parse_csv(csv_str)
       expect(results).to eql []
     end
+
+    it 'parses a csv line if passed a single line of csv' do
+      csv_str = 'foo, bar'
+
+      results = Parser.parse_csv(csv_str)
+      expect(results).to eql [['foo', 'bar']]
+    end
   end
 end
