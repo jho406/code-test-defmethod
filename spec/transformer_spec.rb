@@ -197,12 +197,35 @@ RSpec.describe 'Transformer' do
     end
   end
 
+  context '.transform_date' do
+    it 'Raises invalid sex if sex is not valid' do
+      date = '000000'
+      expect {
+        Transfomer.transform_date(date)
+      }.to raise_error(Transfomer::InvalidDateValue)
+    end
+
+    it 'parses a date' do
+      date = '01 01 2010'
+      expect(
+        Transfomer.transform_date(date)
+      ).to eql(Date.new(2010, 1, 1))
+    end
+
+    it 'parses a date ignoring any delimiter' do
+      date = '01-01|2010'
+      expect(
+        Transfomer.transform_date(date)
+      ).to eql(Date.new(2010, 1, 1))
+    end
+  end
+
   context '.transform_sex' do
     it 'Raises invalid sex if sex is not valid' do
       sex = 'MMMMMMinvalid'
       expect {
         Transfomer.transform_sex(sex)
-      }.to raise_error(Transfomer::InvalidValue)
+      }.to raise_error(Transfomer::InvalidSexValue)
     end
 
     it 'transforms the values of "Male" or "M" to a symbol' do

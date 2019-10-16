@@ -61,6 +61,16 @@ module Transfomer
     end
   end
 
+  def transform_date(value)
+    # From requirements:
+    # Dates are represented in American format (month, day, year).
+    # So we are guarnteed that order of m d y
+    value = value.gsub(/\D/, '-')
+    Date.strptime(value, '%m-%d-%Y')
+  rescue ArgumentError
+    raise InvalidDateValue
+  end
+
   def transform_sex(value)
     value = value.downcase
     case value
@@ -73,10 +83,13 @@ module Transfomer
     when 'f'
       :female
     else
-      raise InvalidValue
+      raise InvalidSexValue
     end
   end
 
-  class InvalidValue < StandardError
+  class InvalidDateValue < StandardError
+  end
+
+  class InvalidSexValue < StandardError
   end
 end
