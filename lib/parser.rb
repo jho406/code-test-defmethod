@@ -21,5 +21,8 @@ module Parser
     end
   end
 
-
+  def parse_from_file(path, options = {})
+    contents = File.read(path)
+    parse(contents, options)
+  end
 end

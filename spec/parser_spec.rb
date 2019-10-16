@@ -1,5 +1,6 @@
 require 'rspec'
 require_relative '../lib/parser'
+require 'byebug'
 
 RSpec.describe 'Parser' do
   context '.parse' do
@@ -98,6 +99,35 @@ RSpec.describe 'Parser' do
       expect(results).to eql(
         [
           ['foo', 'bar'],
+        ]
+      )
+    end
+  end
+
+  context '.parse_from_file' do
+    it 'reads from a filepath and parses it, defaulting to CSV' do
+      sample_csv = File.join(File.dirname(__FILE__), 'fixtures/comma.txt')
+      result = Parser.parse_from_file(sample_csv)
+
+      expect(result).to eql(
+        [
+          ['john', 'smith'],
+          ['jason', 'smithers'],
+        ]
+      )
+    end
+
+    it 'reads from a filepath and parses it, defaulting to CSV' do
+      sample_pound = File.join(File.dirname(__FILE__), 'fixtures/pound.txt')
+      result = Parser.parse_from_file(sample_pound, {
+        delimiter: '#',
+        headers: [:first_name, :last_name]
+      })
+
+      expect(result).to eql(
+        [
+          {first_name: 'john', last_name: 'smith'},
+          {first_name: 'jason', last_name: 'smithers'}
         ]
       )
     end
