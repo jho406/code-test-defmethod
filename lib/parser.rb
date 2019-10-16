@@ -5,6 +5,9 @@ module Parser
     str = str.strip
     return [] if str.empty?
 
-    [line.gsub(' ', '').split(',')]
+    str.split("\n").map do |line|
+      line_no_space = line.gsub(' ', '')
+      line_no_space.split(',')
+    end
   end
 end

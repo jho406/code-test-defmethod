@@ -19,5 +19,20 @@ RSpec.describe 'Parser' do
       results = Parser.parse_csv(csv_str)
       expect(results).to eql [['foo', 'bar']]
     end
+
+    it 'parses multiple csv lines if passed lines of csv' do
+      csv_str = <<~CSV
+      foo, bar
+      abc, 123
+      CSV
+
+      results = Parser.parse_csv(csv_str)
+      expect(results).to eql(
+        [
+          ['foo', 'bar'],
+          ['abc', '123']
+        ]
+      )
+    end
   end
 end
