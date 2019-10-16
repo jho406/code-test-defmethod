@@ -23,7 +23,7 @@ RSpec.describe 'Transformer' do
       }])
     end
 
-    it 'transforms the sex to a lowercase symbol of a single role' do
+    it 'transforms the sex to a lowercase symbol of a single rows' do
       records = [{
         first_name: 'Kelly',
         sex: 'Male'
@@ -34,6 +34,28 @@ RSpec.describe 'Transformer' do
         first_name: 'Kelly',
         sex: :male
       }])
+    end
+
+    it 'transforms the sex to a lowercase symbol of multple rows' do
+      records = [{
+        first_name: 'John',
+        sex: 'Male'
+      },
+      {
+        first_name: 'Kelly',
+        sex: 'Female'
+      }]
+
+      results = Transfomer.transform_comma(records)
+      expect(results[0]).to eql({
+        first_name: 'John',
+        sex: :male
+      })
+
+      expect(results[1]).to eql({
+        first_name: 'Kelly',
+        sex: :female
+      })
     end
   end
 end
