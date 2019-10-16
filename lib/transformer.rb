@@ -20,7 +20,7 @@ module Transfomer
     transform_values(records) do |k, v|
       case k
         when :sex
-          v.downcase.to_sym
+          transform_sex(v)
         when :dob
           Date.strptime(v, '%m/%d/%Y')
         else
@@ -33,11 +33,7 @@ module Transfomer
     transform_values(records) do |k, v|
       case k
       when :sex
-        if v.downcase == 'm'
-          :male
-        else
-          :female
-        end
+        transform_sex(v)
       when :dob
         Date.strptime(v, '%m-%d-%Y')
       else
@@ -47,7 +43,19 @@ module Transfomer
   end
 
   def transform_sex(value)
-    raise InvalidValue
+    value = value.downcase
+    case value
+    when 'male'
+      :male
+    when 'female'
+      :female
+    when 'm'
+      :male
+    when 'f'
+      :female
+    else
+      raise InvalidValue
+    end
   end
 
   class InvalidValue < StandardError

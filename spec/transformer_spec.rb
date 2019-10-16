@@ -136,6 +136,26 @@ RSpec.describe 'Transformer' do
         Transfomer.transform_sex(sex)
       }.to raise_error(Transfomer::InvalidValue)
     end
+
+    it 'transforms the values of "Male" or "M" to a symbol' do
+      sex = 'Male'
+      result = Transfomer.transform_sex(sex)
+      expect(result).to eql :male
+
+      sex = 'M'
+      result = Transfomer.transform_sex(sex)
+      expect(result).to eql :male
+    end
+
+    it 'transforms the values of "Female" or "F" to a symbol' do
+      sex = 'Female'
+      result = Transfomer.transform_sex(sex)
+      expect(result).to eql :female
+
+      sex = 'F'
+      result = Transfomer.transform_sex(sex)
+      expect(result).to eql :female
+    end
   end
 end
 
