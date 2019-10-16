@@ -59,9 +59,9 @@ RSpec.describe 'Parser' do
 
     it 'parses as multiple lines of arrays when passes a bad headers' do
       csv_str = 'foo'
-      headers = nil
+      headers = 'invalid'
 
-      results = Parser.parse(csv_str, nil)
+      results = Parser.parse(csv_str, headers: headers)
       expect(results).to eql [['foo']]
     end
 
@@ -69,7 +69,7 @@ RSpec.describe 'Parser' do
       csv_str = 'john'
       headers = [:first_name]
 
-      results = Parser.parse(csv_str, headers)
+      results = Parser.parse(csv_str, headers: headers)
       expect(results).to eql [{first_name: 'john'}]
     end
 
@@ -77,7 +77,7 @@ RSpec.describe 'Parser' do
       csv_str = 'john'
       headers = [:first_name, :last_name]
 
-      results = Parser.parse(csv_str, headers)
+      results = Parser.parse(csv_str, headers: headers)
       expect(results).to eql [{first_name: 'john', last_name: nil}]
     end
 
@@ -85,7 +85,7 @@ RSpec.describe 'Parser' do
       csv_str = 'john, extra'
       headers = [:first_name]
 
-      results = Parser.parse(csv_str, headers)
+      results = Parser.parse(csv_str, headers: headers)
       expect(results).to eql [{first_name: 'john'}]
     end
 
@@ -94,7 +94,7 @@ RSpec.describe 'Parser' do
       foo| bar
       CSV
 
-      results = Parser.parse(csv_str, nil, '|')
+      results = Parser.parse(csv_str, delimiter: '|')
       expect(results).to eql(
         [
           ['foo', 'bar'],

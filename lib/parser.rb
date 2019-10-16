@@ -1,7 +1,7 @@
 module Parser
   extend self
 
-  def parse(str, headers = nil, delimiter = ',')
+  def parse(str, headers: nil, delimiter: ',')
     str = str.strip
     return [] if str.empty?
 
@@ -10,7 +10,7 @@ module Parser
       line_no_space.split(delimiter)
     end
 
-    return result if headers.nil?
+    return result if !headers.respond_to? :each
 
     result.map do |column|
       record = {}
@@ -20,4 +20,6 @@ module Parser
       record
     end
   end
+
+
 end
