@@ -1,2 +1,2 @@
-john, smith
-jason, smithers
+john,smith
+jason,smithers

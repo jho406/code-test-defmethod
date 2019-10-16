@@ -42,6 +42,17 @@ RSpec.describe 'Transformer' do
   end
 
   context '.transform_comma' do
+    it 'strips the ends of all values' do
+      records = [{
+        foo: ' Kelly ',
+      }]
+
+      results = Transfomer.transform_comma(records)
+      expect(results).to eql([{
+        foo: 'Kelly',
+      }])
+    end
+
     it 'returns first_name and last_name untouched' do
       records = [{
         first_name: 'Kelly',
@@ -83,6 +94,17 @@ RSpec.describe 'Transformer' do
   end
 
   context '.transform_pipe' do
+    it 'strips the ends of all values' do
+      records = [{
+        foo: ' Kelly ',
+      }]
+
+      results = Transfomer.transform_comma(records)
+      expect(results).to eql([{
+        foo: 'Kelly',
+      }])
+    end
+
     it 'returns first_name and last_name untouched' do
       records = [{
         first_name: 'Kelly',
@@ -124,6 +146,17 @@ RSpec.describe 'Transformer' do
   end
 
   context '.transform_space' do
+    it 'strips the ends of all values' do
+      records = [{
+        foo: ' Kelly ',
+      }]
+
+      results = Transfomer.transform_comma(records)
+      expect(results).to eql([{
+        foo: 'Kelly',
+      }])
+    end
+
     it 'returns first_name and last_name untouched' do
       records = [{
         first_name: 'Kelly',

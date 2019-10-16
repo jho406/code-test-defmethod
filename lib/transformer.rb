@@ -18,6 +18,8 @@ module Transfomer
 
   def transform_comma(records = [])
     transform_values(records) do |k, v|
+      v = v.strip
+
       case k
         when :sex
           transform_sex(v)
@@ -31,6 +33,8 @@ module Transfomer
 
   def transform_pipe(records = [])
     transform_values(records) do |k, v|
+      v = v.strip
+
       case k
       when :sex
         transform_sex(v)
@@ -44,6 +48,8 @@ module Transfomer
 
   def transform_space(records = [])
     transform_values(records) do |k, v|
+      v = v.strip
+
       case k
       when :sex
         transform_sex(v)

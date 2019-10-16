@@ -22,7 +22,7 @@ RSpec.describe 'Parser' do
     end
 
     it 'parses a csv line if passed a single line of csv' do
-      csv_str = 'foo, bar'
+      csv_str = 'foo,bar'
 
       results = Parser.parse(csv_str)
       expect(results).to eql [['foo', 'bar']]
@@ -45,8 +45,8 @@ RSpec.describe 'Parser' do
 
     it 'parses multiple csv lines if passed lines and rows' do
       csv_str = <<~CSV
-      foo, bar
-      abc, 123
+      foo,bar
+      abc,123
       CSV
 
       results = Parser.parse(csv_str)
@@ -83,7 +83,7 @@ RSpec.describe 'Parser' do
     end
 
     it 'leaves the values as nil if there are too many rows' do
-      csv_str = 'john, extra'
+      csv_str = 'john,extra'
       headers = [:first_name]
 
       results = Parser.parse(csv_str, headers: headers)
@@ -92,10 +92,23 @@ RSpec.describe 'Parser' do
 
     it 'allows for different kind of delimiters' do
       csv_str = <<~CSV
-      foo| bar
+      foo|bar
       CSV
 
       results = Parser.parse(csv_str, delimiter: '|')
+      expect(results).to eql(
+        [
+          ['foo', 'bar'],
+        ]
+      )
+    end
+
+    it 'allows for a space delimiter' do
+      csv_str = <<~CSV
+      foo bar
+      CSV
+
+      results = Parser.parse(csv_str, delimiter: ' ')
       expect(results).to eql(
         [
           ['foo', 'bar'],

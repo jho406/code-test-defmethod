@@ -6,8 +6,7 @@ module Parser
     return [] if str.empty?
 
     result = str.split("\n").map do |line|
-      line_no_space = line.gsub(' ', '')
-      line_no_space.split(delimiter)
+      line.split(delimiter)
     end
 
     return result if !headers.respond_to? :each
