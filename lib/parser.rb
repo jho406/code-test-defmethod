@@ -1,7 +1,7 @@
 module Parser
   extend self
 
-  def parse_csv(str, headers = nil, delimiter = ',')
+  def parse(str, headers = nil, delimiter = ',')
     str = str.strip
     return [] if str.empty?
 

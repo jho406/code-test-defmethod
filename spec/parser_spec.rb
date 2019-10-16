@@ -2,28 +2,28 @@ require 'rspec'
 require_relative '../lib/parser'
 
 RSpec.describe 'Parser' do
-  context '.parse_csv' do
+  context '.parse' do
     it 'returns empty if called with empty str' do
       csv_str = ''
-      results = Parser.parse_csv(csv_str)
+      results = Parser.parse(csv_str)
       expect(results).to eql []
 
       csv_str = '   '
-      results = Parser.parse_csv(csv_str)
+      results = Parser.parse(csv_str)
       expect(results).to eql []
     end
 
     it 'parses a csv line if passed a single row with a single column' do
       csv_str = 'foo'
 
-      results = Parser.parse_csv(csv_str)
+      results = Parser.parse(csv_str)
       expect(results).to eql [['foo']]
     end
 
     it 'parses a csv line if passed a single line of csv' do
       csv_str = 'foo, bar'
 
-      results = Parser.parse_csv(csv_str)
+      results = Parser.parse(csv_str)
       expect(results).to eql [['foo', 'bar']]
     end
 
@@ -33,7 +33,7 @@ RSpec.describe 'Parser' do
       abc
       CSV
 
-      results = Parser.parse_csv(csv_str)
+      results = Parser.parse(csv_str)
       expect(results).to eql(
         [
           ['foo'],
@@ -48,7 +48,7 @@ RSpec.describe 'Parser' do
       abc, 123
       CSV
 
-      results = Parser.parse_csv(csv_str)
+      results = Parser.parse(csv_str)
       expect(results).to eql(
         [
           ['foo', 'bar'],
@@ -61,7 +61,7 @@ RSpec.describe 'Parser' do
       csv_str = 'foo'
       headers = nil
 
-      results = Parser.parse_csv(csv_str, nil)
+      results = Parser.parse(csv_str, nil)
       expect(results).to eql [['foo']]
     end
 
@@ -69,7 +69,7 @@ RSpec.describe 'Parser' do
       csv_str = 'john'
       headers = [:first_name]
 
-      results = Parser.parse_csv(csv_str, headers)
+      results = Parser.parse(csv_str, headers)
       expect(results).to eql [{first_name: 'john'}]
     end
 
@@ -77,7 +77,7 @@ RSpec.describe 'Parser' do
       csv_str = 'john'
       headers = [:first_name, :last_name]
 
-      results = Parser.parse_csv(csv_str, headers)
+      results = Parser.parse(csv_str, headers)
       expect(results).to eql [{first_name: 'john', last_name: nil}]
     end
 
@@ -85,7 +85,7 @@ RSpec.describe 'Parser' do
       csv_str = 'john, extra'
       headers = [:first_name]
 
-      results = Parser.parse_csv(csv_str, headers)
+      results = Parser.parse(csv_str, headers)
       expect(results).to eql [{first_name: 'john'}]
     end
 
@@ -94,7 +94,7 @@ RSpec.describe 'Parser' do
       foo| bar
       CSV
 
-      results = Parser.parse_csv(csv_str, nil, '|')
+      results = Parser.parse(csv_str, nil, '|')
       expect(results).to eql(
         [
           ['foo', 'bar'],
