@@ -7,6 +7,10 @@ RSpec.describe 'Parser' do
       csv_str = ''
       results = Parser.parse_csv(csv_str)
       expect(results).to eql []
+
+      csv_str = '   '
+      results = Parser.parse_csv(csv_str)
+      expect(results).to eql []
     end
   end
 end
