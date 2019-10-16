@@ -51,6 +51,19 @@ RSpec.describe 'Transformer' do
         sex: :female
       })
     end
+
+    it 'transforms the dob to a date' do
+      records = [
+        {dob: '2/13/1943'},
+        {dob: '4/23/1967'}
+      ]
+
+      results = Transfomer.transform_comma(records)
+      expect(results).to eql([
+        {dob: Date.new(1943, 2, 13)},
+        {dob: Date.new(1967, 4, 23)}
+      ])
+    end
   end
 end
 

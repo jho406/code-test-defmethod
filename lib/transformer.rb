@@ -1,3 +1,5 @@
+require 'date'
+
 module Transfomer
   extend self
 
@@ -9,6 +11,10 @@ module Transfomer
       record.each_pair do |k, v|
         if k == :sex
           v = v.downcase.to_sym
+        end
+
+        if k == :dob
+          v = Date.strptime(v, '%m/%d/%Y')
         end
 
         new_record[k] = v
