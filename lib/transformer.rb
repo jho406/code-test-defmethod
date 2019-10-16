@@ -31,7 +31,11 @@ module Transfomer
       new_record = {}
       record.each_pair do |k, v|
         if k == :sex
-          v = v.downcase.to_sym
+          v = if v.downcase == 'm'
+            :male
+          else
+            :female
+          end
         end
 
         if k == :dob

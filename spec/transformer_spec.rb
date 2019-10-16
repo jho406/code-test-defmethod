@@ -88,7 +88,7 @@ RSpec.describe 'Transformer' do
 
     it 'transforms the sex to a lowercase symbol of a single rows' do
       records = [{
-        sex: 'Male'
+        sex: 'M'
       }]
 
       results = Transfomer.transform_pipe(records)
@@ -99,10 +99,10 @@ RSpec.describe 'Transformer' do
 
     it 'transforms the sex to a lowercase symbol of multiple rows' do
       records = [{
-        sex: 'Male'
+        sex: 'M'
       },
       {
-        sex: 'Female'
+        sex: 'F'
       }]
 
       results = Transfomer.transform_pipe(records)
