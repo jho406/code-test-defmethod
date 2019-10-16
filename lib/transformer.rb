@@ -16,22 +16,7 @@ module Transfomer
     end
   end
 
-  def transform_comma(records = [])
-    transform_values(records) do |k, v|
-      v = v.strip
-
-      case k
-        when :sex
-          transform_sex(v)
-        when :dob
-          Date.strptime(v, '%m/%d/%Y')
-        else
-          v
-      end
-    end
-  end
-
-  def transform_pipe(records = [])
+  def transform_records(records = [])
     transform_values(records) do |k, v|
       v = v.strip
 
@@ -39,22 +24,7 @@ module Transfomer
       when :sex
         transform_sex(v)
       when :dob
-        Date.strptime(v, '%m-%d-%Y')
-      else
-        v
-      end
-    end
-  end
-
-  def transform_space(records = [])
-    transform_values(records) do |k, v|
-      v = v.strip
-
-      case k
-      when :sex
-        transform_sex(v)
-      when :dob
-        Date.strptime(v, '%m-%d-%Y')
+        transform_date(v)
       else
         v
       end
