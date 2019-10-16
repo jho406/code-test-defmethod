@@ -3,13 +3,45 @@ require_relative '../lib/transformer'
 require 'byebug'
 
 RSpec.describe 'Transformer' do
-  context '.transform_comma' do
+  context '.transform_values' do
     it 'returns a blank hash when passed an empty hash' do
       records = []
-      results = Transfomer.transform_comma(records)
+      results = Transfomer.transform_values(records)
       expect(results).to eql([])
     end
 
+    it 'yields through each key and value in one row, and uses the result as the new value' do
+      values = [
+        {foo: 'bar'},
+      ]
+
+      new_values = Transfomer.transform_values(values) do |k, v|
+        v + ' world'
+      end
+
+      expect(new_values).to eql [
+        {foo: 'bar world'},
+      ]
+    end
+
+    it 'yields through each key and value in all rows, and uses the result as the new value' do
+      values = [
+        {foo: 'bar'},
+        {foo: 'bax'},
+      ]
+
+      new_values = Transfomer.transform_values(values) do |k, v|
+        v + ' world'
+      end
+
+      expect(new_values).to eql [
+        {foo: 'bar world'},
+        {foo: 'bax world'}
+      ]
+    end
+  end
+
+  context '.transform_comma' do
     it 'returns first_name and last_name untouched' do
       records = [{
         first_name: 'Kelly',
@@ -23,33 +55,17 @@ RSpec.describe 'Transformer' do
       }])
     end
 
-    it 'transforms the sex to a lowercase symbol of a single rows' do
-      records = [{
-        sex: 'Male'
-      }]
+    it 'transforms the sex to a lowercase symbol' do
+      records = [
+        {sex: 'Male'},
+        {sex: 'Female'}
+      ]
 
       results = Transfomer.transform_comma(records)
-      expect(results).to eql([{
-        sex: :male
-      }])
-    end
-
-    it 'transforms the sex to a lowercase symbol of multiple rows' do
-      records = [{
-        sex: 'Male'
-      },
-      {
-        sex: 'Female'
-      }]
-
-      results = Transfomer.transform_comma(records)
-      expect(results[0]).to eql({
-        sex: :male
-      })
-
-      expect(results[1]).to eql({
-        sex: :female
-      })
+      expect(results).to eql([
+        {sex: :male},
+        {sex: :female}
+      ])
     end
 
     it 'transforms the dob to a date' do
@@ -67,12 +83,6 @@ RSpec.describe 'Transformer' do
   end
 
   context '.transform_pipe' do
-    it 'returns a blank hash when passed an empty hash' do
-      records = []
-      results = Transfomer.transform_pipe(records)
-      expect(results).to eql([])
-    end
-
     it 'returns first_name and last_name untouched' do
       records = [{
         first_name: 'Kelly',
@@ -86,33 +96,17 @@ RSpec.describe 'Transformer' do
       }])
     end
 
-    it 'transforms the sex to a lowercase symbol of a single rows' do
-      records = [{
-        sex: 'M'
-      }]
+    it 'transforms the sex to a lowercase symbol' do
+      records = [
+        {sex: 'M'},
+        {sex: 'F'}
+      ]
 
       results = Transfomer.transform_pipe(records)
-      expect(results).to eql([{
-        sex: :male
-      }])
-    end
-
-    it 'transforms the sex to a lowercase symbol of multiple rows' do
-      records = [{
-        sex: 'M'
-      },
-      {
-        sex: 'F'
-      }]
-
-      results = Transfomer.transform_pipe(records)
-      expect(results[0]).to eql({
-        sex: :male
-      })
-
-      expect(results[1]).to eql({
-        sex: :female
-      })
+      expect(results).to eql([
+        {sex: :male},
+        {sex: :female}
+      ])
     end
 
     it 'transforms the dob to a date' do
