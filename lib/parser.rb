@@ -1,13 +1,23 @@
 module Parser
   extend self
 
-  def parse_csv(str)
+  def parse_csv(str, headers = nil)
     str = str.strip
     return [] if str.empty?
 
-    str.split("\n").map do |line|
+    result = str.split("\n").map do |line|
       line_no_space = line.gsub(' ', '')
       line_no_space.split(',')
+    end
+
+    return result if headers.nil?
+
+    result.map do |column|
+      record = {}
+      headers.each_with_index do |header, index|
+        record[header] = column[index]
+      end
+      record
     end
   end
 end

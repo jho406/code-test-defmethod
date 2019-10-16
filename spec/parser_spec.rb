@@ -57,5 +57,36 @@ RSpec.describe 'Parser' do
       )
     end
 
+    it 'parses as multiple lines of arrays when passes a bad headers' do
+      csv_str = 'foo'
+      headers = nil
+
+      results = Parser.parse_csv(csv_str, nil)
+      expect(results).to eql [['foo']]
+    end
+
+    it 'parses as lines of hashes when passes headers' do
+      csv_str = 'john'
+      headers = [:first_name]
+
+      results = Parser.parse_csv(csv_str, headers)
+      expect(results).to eql [{first_name: 'john'}]
+    end
+
+    it 'leaves the values as nil if there are not enough rows' do
+      csv_str = 'john'
+      headers = [:first_name, :last_name]
+
+      results = Parser.parse_csv(csv_str, headers)
+      expect(results).to eql [{first_name: 'john', last_name: nil}]
+    end
+
+    it 'leaves the values as nil if there are too many rows' do
+      csv_str = 'john, extra'
+      headers = [:first_name]
+
+      results = Parser.parse_csv(csv_str, headers)
+      expect(results).to eql [{first_name: 'john'}]
+    end
   end
 end
