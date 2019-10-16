@@ -1,13 +1,13 @@
 module Parser
   extend self
 
-  def parse_csv(str, headers = nil)
+  def parse_csv(str, headers = nil, delimiter = ',')
     str = str.strip
     return [] if str.empty?
 
     result = str.split("\n").map do |line|
       line_no_space = line.gsub(' ', '')
-      line_no_space.split(',')
+      line_no_space.split(delimiter)
     end
 
     return result if headers.nil?

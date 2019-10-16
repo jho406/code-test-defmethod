@@ -88,5 +88,18 @@ RSpec.describe 'Parser' do
       results = Parser.parse_csv(csv_str, headers)
       expect(results).to eql [{first_name: 'john'}]
     end
+
+    it 'allows for different kind of delimiters' do
+      csv_str = <<~CSV
+      foo| bar
+      CSV
+
+      results = Parser.parse_csv(csv_str, nil, '|')
+      expect(results).to eql(
+        [
+          ['foo', 'bar'],
+        ]
+      )
+    end
   end
 end
