@@ -128,5 +128,14 @@ RSpec.describe 'Transformer' do
       ])
     end
   end
+
+  context '.transform_sex' do
+    it 'Raises invalid sex if sex is not valid' do
+      sex = 'MMMMMMinvalid'
+      expect {
+        Transfomer.transform_sex(sex)
+      }.to raise_error(Transfomer::InvalidValue)
+    end
+  end
 end
 

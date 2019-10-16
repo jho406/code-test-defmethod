@@ -45,4 +45,11 @@ module Transfomer
       end
     end
   end
+
+  def transform_sex(value)
+    raise InvalidValue
+  end
+
+  class InvalidValue < StandardError
+  end
 end
