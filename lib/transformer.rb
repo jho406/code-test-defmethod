@@ -3,5 +3,7 @@ module Transfomer
 
   def transform_comma(records = [])
     return [] if records.empty?
+
+    records
   end
 end
