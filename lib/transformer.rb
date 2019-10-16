@@ -42,6 +42,19 @@ module Transfomer
     end
   end
 
+  def transform_space(records = [])
+    transform_values(records) do |k, v|
+      case k
+      when :sex
+        transform_sex(v)
+      when :dob
+        Date.strptime(v, '%m-%d-%Y')
+      else
+        v
+      end
+    end
+  end
+
   def transform_sex(value)
     value = value.downcase
     case value
