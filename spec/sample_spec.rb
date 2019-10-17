@@ -75,7 +75,7 @@ RSpec.describe 'Sample' do
         {last_name: 'Seles', first_name: 'Monica', initial: 'H', sex: :female, color: 'Black', dob: Date.new(1973, 12, 2)}
       ]
 
-      result = CodeTest.import_sample_files
+      result = CodeTest::Sample.import
       expect(result).to eql(comma_records + pipe_records + space_records)
     end
   end

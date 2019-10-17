@@ -13,8 +13,7 @@ module CodeTest
         file_name, headers, delimiter = v
 
         current_path = File.dirname(__FILE__)
-        comma_file = '../input_files/comma.txt'
-        full_path = File.join(current_path, '../input_files', file_name)
+        full_path = File.join(current_path, '../../input_files', file_name)
 
         Parser.parse_from_file(full_path, headers: headers, delimiter: delimiter)
       end
