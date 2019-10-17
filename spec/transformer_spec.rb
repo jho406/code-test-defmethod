@@ -1,12 +1,12 @@
 require 'rspec'
-require_relative '../lib/transformer'
+require_relative '../lib/code_test'
 require 'byebug'
 
 RSpec.describe 'Transformer' do
   context '.transform_values' do
     it 'returns a blank hash when passed an empty hash' do
       records = []
-      results = Transfomer.transform_values(records)
+      results = CodeTest::Transfomer.transform_values(records)
       expect(results).to eql([])
     end
 
@@ -15,7 +15,7 @@ RSpec.describe 'Transformer' do
         {foo: 'bar'},
       ]
 
-      new_values = Transfomer.transform_values(values) do |k, v|
+      new_values = CodeTest::Transfomer.transform_values(values) do |k, v|
         v + ' world'
       end
 
@@ -30,7 +30,7 @@ RSpec.describe 'Transformer' do
         {foo: 'bax'},
       ]
 
-      new_values = Transfomer.transform_values(values) do |k, v|
+      new_values = CodeTest::Transfomer.transform_values(values) do |k, v|
         v + ' world'
       end
 
@@ -47,7 +47,7 @@ RSpec.describe 'Transformer' do
         foo: ' Kelly ',
       }]
 
-      results = Transfomer.transform_records(records)
+      results = CodeTest::Transfomer.transform_records(records)
       expect(results).to eql([{
         foo: 'Kelly',
       }])
@@ -59,7 +59,7 @@ RSpec.describe 'Transformer' do
         last_name: 'Sue',
       }]
 
-      results = Transfomer.transform_records(records)
+      results = CodeTest::Transfomer.transform_records(records)
       expect(results).to eql([{
         first_name: 'Kelly',
         last_name: 'Sue'
@@ -72,7 +72,7 @@ RSpec.describe 'Transformer' do
         {sex: 'Female'}
       ]
 
-      results = Transfomer.transform_records(records)
+      results = CodeTest::Transfomer.transform_records(records)
       expect(results).to eql([
         {sex: :male},
         {sex: :female}
@@ -85,7 +85,7 @@ RSpec.describe 'Transformer' do
         {dob: '4/23/1967'}
       ]
 
-      results = Transfomer.transform_records(records)
+      results = CodeTest::Transfomer.transform_records(records)
       expect(results).to eql([
         {dob: Date.new(1943, 2, 13)},
         {dob: Date.new(1967, 4, 23)}
@@ -97,21 +97,21 @@ RSpec.describe 'Transformer' do
     it 'Raises invalid sex if sex is not valid' do
       date = '000000'
       expect {
-        Transfomer.transform_date(date)
-      }.to raise_error(Transfomer::InvalidDateValue)
+        CodeTest::Transfomer.transform_date(date)
+      }.to raise_error(CodeTest::Transfomer::InvalidDateValue)
     end
 
     it 'parses a date' do
       date = '01 01 2010'
       expect(
-        Transfomer.transform_date(date)
+        CodeTest::Transfomer.transform_date(date)
       ).to eql(Date.new(2010, 1, 1))
     end
 
     it 'parses a date ignoring any delimiter' do
       date = '01-01|2010'
       expect(
-        Transfomer.transform_date(date)
+        CodeTest::Transfomer.transform_date(date)
       ).to eql(Date.new(2010, 1, 1))
     end
   end
@@ -120,27 +120,27 @@ RSpec.describe 'Transformer' do
     it 'Raises invalid sex if sex is not valid' do
       sex = 'MMMMMMinvalid'
       expect {
-        Transfomer.transform_sex(sex)
-      }.to raise_error(Transfomer::InvalidSexValue)
+        CodeTest::Transfomer.transform_sex(sex)
+      }.to raise_error(CodeTest::Transfomer::InvalidSexValue)
     end
 
     it 'transforms the values of "Male" or "M" to a symbol' do
       sex = 'Male'
-      result = Transfomer.transform_sex(sex)
+      result = CodeTest::Transfomer.transform_sex(sex)
       expect(result).to eql :male
 
       sex = 'M'
-      result = Transfomer.transform_sex(sex)
+      result = CodeTest::Transfomer.transform_sex(sex)
       expect(result).to eql :male
     end
 
     it 'transforms the values of "Female" or "F" to a symbol' do
       sex = 'Female'
-      result = Transfomer.transform_sex(sex)
+      result = CodeTest::Transfomer.transform_sex(sex)
       expect(result).to eql :female
 
       sex = 'F'
-      result = Transfomer.transform_sex(sex)
+      result = CodeTest::Transfomer.transform_sex(sex)
       expect(result).to eql :female
     end
   end

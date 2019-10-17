@@ -1,30 +1,30 @@
 require 'rspec'
-require_relative '../lib/parser'
+require_relative '../lib/code_test'
 require 'byebug'
 
-RSpec.describe 'Parser' do
+RSpec.describe 'CodeTest::Parser' do
   context '.parse' do
     it 'returns empty if called with empty str' do
       csv_str = ''
-      results = Parser.parse(csv_str)
+      results = CodeTest::Parser.parse(csv_str)
       expect(results).to eql []
 
       csv_str = '   '
-      results = Parser.parse(csv_str)
+      results = CodeTest::Parser.parse(csv_str)
       expect(results).to eql []
     end
 
     it 'parses a csv line if passed a single row with a single column' do
       csv_str = 'foo'
 
-      results = Parser.parse(csv_str)
+      results = CodeTest::Parser.parse(csv_str)
       expect(results).to eql [['foo']]
     end
 
     it 'parses a csv line if passed a single line of csv' do
       csv_str = 'foo,bar'
 
-      results = Parser.parse(csv_str)
+      results = CodeTest::Parser.parse(csv_str)
       expect(results).to eql [['foo', 'bar']]
     end
 
@@ -34,7 +34,7 @@ RSpec.describe 'Parser' do
       abc
       CSV
 
-      results = Parser.parse(csv_str)
+      results = CodeTest::Parser.parse(csv_str)
       expect(results).to eql(
         [
           ['foo'],
@@ -49,7 +49,7 @@ RSpec.describe 'Parser' do
       abc,123
       CSV
 
-      results = Parser.parse(csv_str)
+      results = CodeTest::Parser.parse(csv_str)
       expect(results).to eql(
         [
           ['foo', 'bar'],
@@ -62,7 +62,7 @@ RSpec.describe 'Parser' do
       csv_str = 'foo'
       headers = 'invalid'
 
-      results = Parser.parse(csv_str, headers: headers)
+      results = CodeTest::Parser.parse(csv_str, headers: headers)
       expect(results).to eql [['foo']]
     end
 
@@ -70,7 +70,7 @@ RSpec.describe 'Parser' do
       csv_str = 'john'
       headers = [:first_name]
 
-      results = Parser.parse(csv_str, headers: headers)
+      results = CodeTest::Parser.parse(csv_str, headers: headers)
       expect(results).to eql [{first_name: 'john'}]
     end
 
@@ -78,7 +78,7 @@ RSpec.describe 'Parser' do
       csv_str = 'john'
       headers = [:first_name, :last_name]
 
-      results = Parser.parse(csv_str, headers: headers)
+      results = CodeTest::Parser.parse(csv_str, headers: headers)
       expect(results).to eql [{first_name: 'john', last_name: nil}]
     end
 
@@ -86,7 +86,7 @@ RSpec.describe 'Parser' do
       csv_str = 'john,extra'
       headers = [:first_name]
 
-      results = Parser.parse(csv_str, headers: headers)
+      results = CodeTest::Parser.parse(csv_str, headers: headers)
       expect(results).to eql [{first_name: 'john'}]
     end
 
@@ -95,7 +95,7 @@ RSpec.describe 'Parser' do
       foo|bar
       CSV
 
-      results = Parser.parse(csv_str, delimiter: '|')
+      results = CodeTest::Parser.parse(csv_str, delimiter: '|')
       expect(results).to eql(
         [
           ['foo', 'bar'],
@@ -108,7 +108,7 @@ RSpec.describe 'Parser' do
       foo bar
       CSV
 
-      results = Parser.parse(csv_str, delimiter: ' ')
+      results = CodeTest::Parser.parse(csv_str, delimiter: ' ')
       expect(results).to eql(
         [
           ['foo', 'bar'],
@@ -120,7 +120,7 @@ RSpec.describe 'Parser' do
   context '.parse_from_file' do
     it 'reads from a filepath and parses it, defaulting to CSV' do
       sample_csv = File.join(File.dirname(__FILE__), 'fixtures/comma.txt')
-      result = Parser.parse_from_file(sample_csv)
+      result = CodeTest::Parser.parse_from_file(sample_csv)
 
       expect(result).to eql(
         [
@@ -132,7 +132,7 @@ RSpec.describe 'Parser' do
 
     it 'reads from a filepath and parses it, defaulting to CSV' do
       sample_pound = File.join(File.dirname(__FILE__), 'fixtures/pound.txt')
-      result = Parser.parse_from_file(sample_pound, {
+      result = CodeTest::Parser.parse_from_file(sample_pound, {
         delimiter: '#',
         headers: [:first_name, :last_name]
       })
