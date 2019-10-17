@@ -27,10 +27,10 @@ RSpec.describe 'Sample' do
       }])
     end
 
-    it 'transforms the sex to a lowercase symbol' do
+    it 'tranforms to ensure sex is capitalized and fully worded' do
       records = [
         {sex: 'Male'},
-        {sex: 'Female'}
+        {sex: 'F'}
       ]
 
       results = CodeTest::Sample.transform_records(records)

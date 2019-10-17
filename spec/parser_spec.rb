@@ -81,7 +81,7 @@ RSpec.describe 'CodeTest::Parser' do
       expect(results).to eql [{first_name: 'john', last_name: nil}]
     end
 
-    it 'leaves the values as nil if there are too many rows' do
+    it 'leaves off the extra values if there are too many columns and not enough headers' do
       csv_str = 'john,extra'
       headers = [:first_name]
 
@@ -129,7 +129,7 @@ RSpec.describe 'CodeTest::Parser' do
       )
     end
 
-    it 'reads from a filepath and parses it, defaulting to CSV' do
+    it 'reads from a filepath and parses it with an explicit delimiter and headers' do
       sample_pound = File.join(File.dirname(__FILE__), 'fixtures/pound.txt')
       result = CodeTest::Parser.parse_from_file(sample_pound, {
         delimiter: '#',

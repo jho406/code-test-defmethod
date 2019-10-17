@@ -71,7 +71,7 @@ RSpec.describe 'Transformer' do
       }.to raise_error(CodeTest::Transfomer::InvalidSexValue)
     end
 
-    it 'transforms the values of "Male" or "M" to a symbol' do
+    it 'transforms the values of "Male" or "M" to a fully worded word' do
       sex = 'Male'
       result = CodeTest::Transfomer.transform_sex(sex)
       expect(result).to eql 'Male'
@@ -81,7 +81,7 @@ RSpec.describe 'Transformer' do
       expect(result).to eql 'Male'
     end
 
-    it 'transforms the values of "Female" or "F" to a symbol' do
+    it 'transforms the values of "Female" or "F" to a fully worded word' do
       sex = 'Female'
       result = CodeTest::Transfomer.transform_sex(sex)
       expect(result).to eql 'Female'
