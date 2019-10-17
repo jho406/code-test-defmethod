@@ -80,6 +80,32 @@ RSpec.describe 'Sample' do
     end
   end
 
+  context 'view_by_last_name_dsc' do
+    it 'shows no records if records is empty' do
+      records = []
+      output = CodeTest::Sample.view_by_last_name_dsc(records)
+      expect(output).to eql <<~OUTPUT
+      Output 3:
+      No records
+      OUTPUT
+    end
+
+    it 'show a list of records sorted by lastname in dsc order' do
+      records = [
+        {last_name: 'Abc', first_name: 'Zoo', sex: 'Male', color: 'Tan', dob: Date.new(1943, 2, 13)},
+        {last_name: 'Def', first_name: 'Xoo', sex: 'Male', color: 'Gan', dob: Date.new(1943, 2, 13)},
+        {last_name: 'Ghi', first_name: 'Voo', sex: 'Male', color: 'Tan', dob: Date.new(1943, 2, 13)}
+      ]
+      output = CodeTest::Sample.view_by_last_name_dsc(records)
+      expect(output).to eql <<~OUTPUT
+      Output 3:
+      Ghi Voo Male 2/13/1943 Tan
+      Def Xoo Male 2/13/1943 Gan
+      Abc Zoo Male 2/13/1943 Tan
+      OUTPUT
+    end
+  end
+
 end
 
 

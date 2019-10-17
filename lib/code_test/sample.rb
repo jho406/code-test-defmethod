@@ -8,6 +8,15 @@ module CodeTest
       ['space.txt', [:last_name, :first_name, :initial, :sex, :dob, :color], ' '],
     ]
 
+    def view_by_last_name_dsc(records=[])
+      #Output 3 - sorted by last name, descending
+      sorted_records = records.sort do |left, right|
+        right[:last_name] <=> left[:last_name]
+      end
+
+      Output.view(sorted_records, 'Output 3:')
+    end
+
     def import
       all_records = FILES_HEADERS_AND_DELIMITERS.flat_map do |v|
         file_name, headers, delimiter = v
