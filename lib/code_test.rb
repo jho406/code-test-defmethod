@@ -1,5 +1,6 @@
 require 'code_test/parser'
 require 'code_test/transformer'
+require 'code_test/sample'
 
 module CodeTest
   extend self
@@ -21,6 +22,6 @@ module CodeTest
       Parser.parse_from_file(full_path, headers: headers, delimiter: delimiter)
     end
 
-    Transfomer.transform_records(all_records)
+    Sample.transform_records(all_records)
   end
 end

@@ -17,21 +17,6 @@ module CodeTest
       end
     end
 
-    def transform_records(records = [])
-      transform_values(records) do |k, v|
-        v = v.strip
-
-        case k
-        when :sex
-          transform_sex(v)
-        when :dob
-          transform_date(v)
-        else
-          v
-        end
-      end
-    end
-
     def transform_date(value)
       # From requirements:
       # Dates are represented in American format (month, day, year).
