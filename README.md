@@ -10,3 +10,9 @@ Step 2:
 bundle install
 bin/run
 ```
+
+To run tests:
+
+```
+bundle exec rspec
+```
