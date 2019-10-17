@@ -12,7 +12,7 @@ RSpec.describe 'Transformer' do
 
     it 'yields through each key and value in one row, and uses the result as the new value' do
       values = [
-        {foo: 'bar'},
+        {foo: 'bar'}
       ]
 
       new_values = CodeTest::Transfomer.transform_each_value(values) do |k, v|
@@ -20,14 +20,14 @@ RSpec.describe 'Transformer' do
       end
 
       expect(new_values).to eql [
-        {foo: 'bar world'},
+        {foo: 'bar world'}
       ]
     end
 
     it 'yields through each key and value in all rows, and uses the result as the new value' do
       values = [
         {foo: 'bar'},
-        {foo: 'bax'},
+        {foo: 'bax'}
       ]
 
       new_values = CodeTest::Transfomer.transform_each_value(values) do |k, v|
