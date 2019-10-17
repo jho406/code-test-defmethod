@@ -40,8 +40,8 @@ module CodeTest
 
   def view_by_last_name_dsc(records=[])
     #Output 3 - sorted by last name, descending
-    sorted_records = records.sort do |left, right|
-      right[:last_name] <=> left[:last_name]
+    sorted_records = records.sort do |top, bottom|
+      bottom[:last_name] <=> top[:last_name]
     end
 
     Output.view(sorted_records, 'Output 3:')
