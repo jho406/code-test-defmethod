@@ -3,10 +3,10 @@ require_relative '../lib/code_test'
 require 'byebug'
 
 RSpec.describe 'Transformer' do
-  context '.transform_values' do
+  context '.transform_each_value' do
     it 'returns a blank hash when passed an empty hash' do
       records = []
-      results = CodeTest::Transfomer.transform_values(records)
+      results = CodeTest::Transfomer.transform_each_value(records)
       expect(results).to eql([])
     end
 
@@ -15,7 +15,7 @@ RSpec.describe 'Transformer' do
         {foo: 'bar'},
       ]
 
-      new_values = CodeTest::Transfomer.transform_values(values) do |k, v|
+      new_values = CodeTest::Transfomer.transform_each_value(values) do |k, v|
         v + ' world'
       end
 
@@ -30,7 +30,7 @@ RSpec.describe 'Transformer' do
         {foo: 'bax'},
       ]
 
-      new_values = CodeTest::Transfomer.transform_values(values) do |k, v|
+      new_values = CodeTest::Transfomer.transform_each_value(values) do |k, v|
         v + ' world'
       end
 

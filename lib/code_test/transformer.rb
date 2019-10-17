@@ -4,7 +4,7 @@ module CodeTest
   module Transfomer
     extend self
 
-    def transform_values(records = [])
+    def transform_each_value(records = [])
       return [] if records.empty?
 
       records.map do |record|

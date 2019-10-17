@@ -58,7 +58,7 @@ module CodeTest
     end
 
     def transform_records(records = [])
-      Transfomer.transform_values(records) do |k, v|
+      Transfomer.transform_each_value(records) do |k, v|
         v = v.strip
 
         case k
