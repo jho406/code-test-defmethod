@@ -1,6 +1,5 @@
 require 'rspec'
 require_relative '../lib/code_test'
-require 'byebug'
 
 RSpec.describe 'Sample' do
   context '.transform_records' do
