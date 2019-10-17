@@ -1,14 +1,14 @@
 require 'rspec'
 require_relative '../lib/code_test'
 
-RSpec.describe 'Sample' do
+RSpec.describe 'CodeTest' do
   context '.transform_records' do
     it 'strips the ends of all values' do
       records = [{
         foo: ' Kelly ',
       }]
 
-      results = CodeTest::Sample.transform_records(records)
+      results = CodeTest.transform_records(records)
       expect(results).to eql([{
         foo: 'Kelly',
       }])
@@ -20,7 +20,7 @@ RSpec.describe 'Sample' do
         last_name: 'Sue',
       }]
 
-      results = CodeTest::Sample.transform_records(records)
+      results = CodeTest.transform_records(records)
       expect(results).to eql([{
         first_name: 'Kelly',
         last_name: 'Sue'
@@ -33,7 +33,7 @@ RSpec.describe 'Sample' do
         {sex: 'F'}
       ]
 
-      results = CodeTest::Sample.transform_records(records)
+      results = CodeTest.transform_records(records)
       expect(results).to eql([
         {sex: 'Male'},
         {sex: 'Female'}
@@ -46,7 +46,7 @@ RSpec.describe 'Sample' do
         {dob: '4/23/1967'}
       ]
 
-      results = CodeTest::Sample.transform_records(records)
+      results = CodeTest.transform_records(records)
       expect(results).to eql([
         {dob: Date.new(1943, 2, 13)},
         {dob: Date.new(1967, 4, 23)}
@@ -74,7 +74,7 @@ RSpec.describe 'Sample' do
         {last_name: 'Seles', first_name: 'Monica', initial: 'H', sex: 'Female', color: 'Black', dob: Date.new(1973, 12, 2)}
       ]
 
-      result = CodeTest::Sample.import_input
+      result = CodeTest.import_input
       expect(result).to eql(comma_records + pipe_records + space_records)
     end
   end
@@ -82,7 +82,7 @@ RSpec.describe 'Sample' do
   context '.view_by_last_name_dsc' do
     it 'shows no records if records is empty' do
       records = []
-      output = CodeTest::Sample.view_by_last_name_dsc(records)
+      output = CodeTest.view_by_last_name_dsc(records)
       expect(output).to eql <<~OUTPUT
       Output 3:
       No records
@@ -95,7 +95,7 @@ RSpec.describe 'Sample' do
         {last_name: 'Def', first_name: 'Xoo', sex: 'Male', color: 'Gan', dob: Date.new(1943, 2, 13)},
         {last_name: 'Ghi', first_name: 'Voo', sex: 'Male', color: 'Tan', dob: Date.new(1943, 2, 13)}
       ]
-      output = CodeTest::Sample.view_by_last_name_dsc(records)
+      output = CodeTest.view_by_last_name_dsc(records)
       expect(output).to eql <<~OUTPUT
       Output 3:
       Ghi Voo Male 2/13/1943 Tan
@@ -108,7 +108,7 @@ RSpec.describe 'Sample' do
   context '.view_by_dob_asc_then_last_name_asc' do
     it 'shows no records if records is empty' do
       records = []
-      output = CodeTest::Sample.view_by_dob_asc_then_last_name_asc(records)
+      output = CodeTest.view_by_dob_asc_then_last_name_asc(records)
       expect(output).to eql <<~OUTPUT
       Output 2:
       No records
@@ -124,7 +124,7 @@ RSpec.describe 'Sample' do
         {last_name: 'Ahi', first_name: 'Joe', sex: 'Male', color: 'Tan', dob: Date.new(1943, 1, 13)},
         {last_name: 'Zhi', first_name: 'Joe', sex: 'Male', color: 'Tan', dob: Date.new(1943, 1, 13)}
       ]
-      output = CodeTest::Sample.view_by_dob_asc_then_last_name_asc(records)
+      output = CodeTest.view_by_dob_asc_then_last_name_asc(records)
       expect(output).to eql <<~OUTPUT
       Output 2:
       Ahi Joe Male 1/13/1943 Tan
@@ -140,7 +140,7 @@ RSpec.describe 'Sample' do
   context '.view_by_gender_sex_asc_then_last_asc' do
     it 'shows no records if records is empty' do
       records = []
-      output = CodeTest::Sample.view_by_gender_sex_asc_then_last_asc(records)
+      output = CodeTest.view_by_gender_sex_asc_then_last_asc(records)
       expect(output).to eql <<~OUTPUT
       Output 1:
       No records
@@ -156,7 +156,7 @@ RSpec.describe 'Sample' do
         {last_name: 'Ahi', first_name: 'Jil', sex: 'Female', color: 'Tan', dob: Date.new(1943, 1, 13)},
         {last_name: 'Zhi', first_name: 'Joe', sex: 'Male', color: 'Tan', dob: Date.new(1943, 1, 13)}
       ]
-      output = CodeTest::Sample.view_by_gender_sex_asc_then_last_asc(records)
+      output = CodeTest.view_by_gender_sex_asc_then_last_asc(records)
       expect(output).to eql <<~OUTPUT
       Output 1:
       Ahi Jil Female 1/13/1943 Tan
@@ -207,7 +207,7 @@ RSpec.describe 'Sample' do
       OUTPUT
 
       expect{
-        CodeTest::Sample.run
+        CodeTest.run
       }.to output(target_output).to_stdout
     end
   end
