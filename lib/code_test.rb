@@ -13,7 +13,7 @@ module CodeTest
 
   def run
     records = import_input
-    output_1 = Output.show_by_gender_sex_asc_then_last_asc(records)
+    output_1 = Output.show_by_gender_sex_asc_then_last_name_asc(records)
     output_2 = Output.show_by_dob_asc_then_last_name_asc(records)
     output_3 = Output.show_by_last_name_dsc(records)
 

@@ -25,7 +25,7 @@ module CodeTest
       OUTPUT
     end
 
-    def show_by_gender_sex_asc_then_last_asc(records=[])
+    def show_by_gender_sex_asc_then_last_name_asc(records=[])
       #Output 1 - sorted by gender (females before males) then by last name ascending
       sorted_records = records.sort_by do |record|
         [record[:sex], record[:last_name]]
