@@ -34,14 +34,14 @@ module CodeTest
   end
 
   def transform_records(records = [])
-    Transfomer.transform_each_value(records) do |key, value|
+    Transformer.transform_each_value(records) do |key, value|
       value = value.strip
 
       case key
       when :sex
-        Transfomer.transform_sex(value)
+        Transformer.transform_sex(value)
       when :dob
-        Transfomer.transform_date(value)
+        Transformer.transform_date(value)
       else
         value
       end

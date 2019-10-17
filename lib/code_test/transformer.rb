@@ -1,7 +1,7 @@
 require 'date'
 
 module CodeTest
-  module Transfomer
+  module Transformer
     extend self
 
     def transform_each_value(records = [])
