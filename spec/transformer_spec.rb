@@ -3,7 +3,7 @@ require_relative '../lib/code_test'
 
 RSpec.describe 'Transformer' do
   context '.transform_each_value' do
-    it 'returns a blank hash when passed an empty hash' do
+    it 'returns a blank array when passed an empty array' do
       records = []
       results = CodeTest::Transfomer.transform_each_value(records)
       expect(results).to eql([])
@@ -14,28 +14,28 @@ RSpec.describe 'Transformer' do
         {foo: 'bar'}
       ]
 
-      new_values = CodeTest::Transfomer.transform_each_value(values) do |k, v|
-        v + ' world'
+      new_values = CodeTest::Transfomer.transform_each_value(values) do |key, value|
+        "The key is #{key} and the value is #{value}"
       end
 
       expect(new_values).to eql [
-        {foo: 'bar world'}
+        {foo: 'The key is foo and the value is bar'}
       ]
     end
 
     it 'yields through each key and value in all rows, and uses the result as the new value' do
       values = [
-        {foo: 'bar'},
-        {foo: 'bax'}
+        {foo: 'bar 1'},
+        {foo: 'bar 2'}
       ]
 
-      new_values = CodeTest::Transfomer.transform_each_value(values) do |k, v|
-        v + ' world'
+      new_values = CodeTest::Transfomer.transform_each_value(values) do |key, value|
+        "The key is #{key} and the value is #{value}"
       end
 
       expect(new_values).to eql [
-        {foo: 'bar world'},
-        {foo: 'bax world'}
+        {foo: 'The key is foo and the value is bar 1'},
+        {foo: 'The key is foo and the value is bar 2'}
       ]
     end
   end
