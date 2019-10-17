@@ -35,7 +35,7 @@ module CodeTest
       Output.view(sorted_records, 'Output 3:')
     end
 
-    def import
+    def import_input
       all_records = FILES_HEADERS_AND_DELIMITERS.flat_map do |v|
         file_name, headers, delimiter = v
 

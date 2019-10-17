@@ -55,7 +55,7 @@ RSpec.describe 'Sample' do
     end
   end
 
-  context '.import' do
+  context '.import_input' do
     it 'imports comma.txt, pipe.txt, and space.txt' do
       comma_records = [
         {last_name: 'Abercrombie', first_name: 'Neil', sex: :male, color: 'Tan', dob: Date.new(1943, 2, 13)},
@@ -75,7 +75,7 @@ RSpec.describe 'Sample' do
         {last_name: 'Seles', first_name: 'Monica', initial: 'H', sex: :female, color: 'Black', dob: Date.new(1973, 12, 2)}
       ]
 
-      result = CodeTest::Sample.import
+      result = CodeTest::Sample.import_input
       expect(result).to eql(comma_records + pipe_records + space_records)
     end
   end
