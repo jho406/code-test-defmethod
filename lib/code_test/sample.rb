@@ -8,6 +8,15 @@ module CodeTest
       ['space.txt', [:last_name, :first_name, :initial, :sex, :dob, :color], ' '],
     ]
 
+    def view_by_gender_sex_asc_then_last_asc(records=[])
+      #Output 1 - sorted by gender (females before males) then by last name ascending
+      sorted_records = records.sort_by do |record|
+        [record[:sex], record[:last_name]]
+      end
+
+      Output.view(sorted_records, 'Output 1:')
+    end
+
     def view_by_dob_asc_then_last_name_asc(records=[])
       #Output 2 - sorted by birth date, ascending then by last name ascending
       sorted_records = records.sort_by do |record|

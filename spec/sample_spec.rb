@@ -137,6 +137,38 @@ RSpec.describe 'Sample' do
       OUTPUT
     end
   end
+
+  context 'view_by_gender_sex_asc_then_last_asc' do
+    it 'shows no records if records is empty' do
+      records = []
+      output = CodeTest::Sample.view_by_gender_sex_asc_then_last_asc(records)
+      expect(output).to eql <<~OUTPUT
+      Output 1:
+      No records
+      OUTPUT
+    end
+
+    it 'show a list of records sorted by lastname in dsc order' do
+      records = [
+        {last_name: 'Zbc', first_name: 'Jil', sex: 'Female', color: 'Tan', dob: Date.new(1943, 1, 13)},
+        {last_name: 'Abc', first_name: 'Joe', sex: 'Male', color: 'Tan', dob: Date.new(1943, 1, 13)},
+        {last_name: 'Vef', first_name: 'Jil', sex: 'Female', color: 'Gan', dob: Date.new(1943, 1, 13)},
+        {last_name: 'Def', first_name: 'Joe', sex: 'Male', color: 'Gan', dob: Date.new(1943, 1, 13)},
+        {last_name: 'Ahi', first_name: 'Jil', sex: 'Female', color: 'Tan', dob: Date.new(1943, 1, 13)},
+        {last_name: 'Zhi', first_name: 'Joe', sex: 'Male', color: 'Tan', dob: Date.new(1943, 1, 13)}
+      ]
+      output = CodeTest::Sample.view_by_gender_sex_asc_then_last_asc(records)
+      expect(output).to eql <<~OUTPUT
+      Output 1:
+      Ahi Jil Female 1/13/1943 Tan
+      Vef Jil Female 1/13/1943 Gan
+      Zbc Jil Female 1/13/1943 Tan
+      Abc Joe Male 1/13/1943 Tan
+      Def Joe Male 1/13/1943 Gan
+      Zhi Joe Male 1/13/1943 Tan
+      OUTPUT
+    end
+  end
 end
 
 
