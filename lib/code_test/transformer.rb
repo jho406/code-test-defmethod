@@ -31,13 +31,13 @@ module CodeTest
       value = value.downcase
       case value
       when 'male'
-        :male
+        'Male'
       when 'female'
-        :female
+        'Female'
       when 'm'
-        :male
+        'Male'
       when 'f'
-        :female
+        'Female'
       else
         raise InvalidSexValue
       end

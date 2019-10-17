@@ -75,21 +75,21 @@ RSpec.describe 'Transformer' do
     it 'transforms the values of "Male" or "M" to a symbol' do
       sex = 'Male'
       result = CodeTest::Transfomer.transform_sex(sex)
-      expect(result).to eql :male
+      expect(result).to eql 'Male'
 
       sex = 'M'
       result = CodeTest::Transfomer.transform_sex(sex)
-      expect(result).to eql :male
+      expect(result).to eql 'Male'
     end
 
     it 'transforms the values of "Female" or "F" to a symbol' do
       sex = 'Female'
       result = CodeTest::Transfomer.transform_sex(sex)
-      expect(result).to eql :female
+      expect(result).to eql 'Female'
 
       sex = 'F'
       result = CodeTest::Transfomer.transform_sex(sex)
-      expect(result).to eql :female
+      expect(result).to eql 'Female'
     end
   end
 end
