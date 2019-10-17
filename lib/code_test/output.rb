@@ -5,6 +5,7 @@ module CodeTest
     def view(records=[], title='My Records:')
       <<~OUTPUT
       #{title}
+      No records
       OUTPUT
     end
   end
