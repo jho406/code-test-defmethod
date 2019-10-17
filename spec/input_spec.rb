@@ -110,7 +110,7 @@ RSpec.describe 'CodeTest::Input' do
       results = CodeTest::Input.parse(csv_str, delimiter: ' ')
       expect(results).to eql(
         [
-          ['foo', 'bar'],
+          ['foo', 'bar']
         ]
       )
     end
@@ -124,7 +124,7 @@ RSpec.describe 'CodeTest::Input' do
       expect(result).to eql(
         [
           ['john', 'smith'],
-          ['jason', 'smithers'],
+          ['jason', 'smithers']
         ]
       )
     end

@@ -5,19 +5,19 @@ RSpec.describe 'CodeTest' do
   context '.transform_records' do
     it 'strips the ends of all values' do
       records = [{
-        foo: ' Kelly ',
+        foo: ' Kelly '
       }]
 
       results = CodeTest.transform_records(records)
       expect(results).to eql([{
-        foo: 'Kelly',
+        foo: 'Kelly'
       }])
     end
 
     it 'returns first_name and last_name untouched' do
       records = [{
         first_name: 'Kelly',
-        last_name: 'Sue',
+        last_name: 'Sue'
       }]
 
       results = CodeTest.transform_records(records)
