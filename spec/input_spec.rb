@@ -90,9 +90,9 @@ RSpec.describe 'CodeTest::Input' do
     end
 
     it 'allows for different kind of delimiters' do
-      csv_str = <<~CSV
+      csv_str = <<~PIPE
       foo|bar
-      CSV
+      PIPE
 
       results = CodeTest::Input.parse(csv_str, delimiter: '|')
       expect(results).to eql(
@@ -103,9 +103,9 @@ RSpec.describe 'CodeTest::Input' do
     end
 
     it 'allows for a space delimiter' do
-      csv_str = <<~CSV
+      csv_str = <<~SPACE
       foo bar
-      CSV
+      SPACE
 
       results = CodeTest::Input.parse(csv_str, delimiter: ' ')
       expect(results).to eql(
