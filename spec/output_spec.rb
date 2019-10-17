@@ -21,7 +21,7 @@ RSpec.describe 'CodeTest::Output' do
       OUTPUT
     end
 
-    it 'shows a single formatted record' do
+    it 'shows a single formatted record with a formatted dob' do
       records = [
         {last_name: 'Smith', first_name: 'John', sex: 'Male', dob: Date.new(2014, 1, 20), color: 'Tan'}
       ]
