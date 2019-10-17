@@ -1,4 +1,4 @@
-require 'code_test/parser'
+require 'code_test/input'
 require 'code_test/transformer'
 require 'code_test/output'
 
@@ -27,7 +27,7 @@ module CodeTest
       current_path = File.dirname(__FILE__)
       full_path = File.join(current_path, '../input_files', file_name)
 
-      Parser.parse_from_file(full_path, headers: headers, delimiter: delimiter)
+      Input.parse_from_file(full_path, headers: headers, delimiter: delimiter)
     end
 
     transform_records(all_records)

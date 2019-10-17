@@ -1,5 +1,5 @@
 module CodeTest
-  module Parser
+  module Input
     extend self
 
     def parse(str, headers: nil, delimiter: ',')

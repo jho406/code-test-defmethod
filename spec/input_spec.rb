@@ -1,29 +1,29 @@
 require 'rspec'
 require_relative '../lib/code_test'
 
-RSpec.describe 'CodeTest::Parser' do
+RSpec.describe 'CodeTest::Input' do
   context '.parse' do
     it 'returns empty if called with empty str' do
       csv_str = ''
-      results = CodeTest::Parser.parse(csv_str)
+      results = CodeTest::Input.parse(csv_str)
       expect(results).to eql []
 
       csv_str = '   '
-      results = CodeTest::Parser.parse(csv_str)
+      results = CodeTest::Input.parse(csv_str)
       expect(results).to eql []
     end
 
     it 'parses a csv line if passed a single row with a single column' do
       csv_str = 'foo'
 
-      results = CodeTest::Parser.parse(csv_str)
+      results = CodeTest::Input.parse(csv_str)
       expect(results).to eql [['foo']]
     end
 
     it 'parses a csv line if passed a single line of csv' do
       csv_str = 'foo,bar'
 
-      results = CodeTest::Parser.parse(csv_str)
+      results = CodeTest::Input.parse(csv_str)
       expect(results).to eql [['foo', 'bar']]
     end
 
@@ -33,7 +33,7 @@ RSpec.describe 'CodeTest::Parser' do
       abc
       CSV
 
-      results = CodeTest::Parser.parse(csv_str)
+      results = CodeTest::Input.parse(csv_str)
       expect(results).to eql(
         [
           ['foo'],
@@ -48,7 +48,7 @@ RSpec.describe 'CodeTest::Parser' do
       abc,123
       CSV
 
-      results = CodeTest::Parser.parse(csv_str)
+      results = CodeTest::Input.parse(csv_str)
       expect(results).to eql(
         [
           ['foo', 'bar'],
@@ -61,7 +61,7 @@ RSpec.describe 'CodeTest::Parser' do
       csv_str = 'foo'
       headers = 'invalid'
 
-      results = CodeTest::Parser.parse(csv_str, headers: headers)
+      results = CodeTest::Input.parse(csv_str, headers: headers)
       expect(results).to eql [['foo']]
     end
 
@@ -69,7 +69,7 @@ RSpec.describe 'CodeTest::Parser' do
       csv_str = 'john'
       headers = [:first_name]
 
-      results = CodeTest::Parser.parse(csv_str, headers: headers)
+      results = CodeTest::Input.parse(csv_str, headers: headers)
       expect(results).to eql [{first_name: 'john'}]
     end
 
@@ -77,7 +77,7 @@ RSpec.describe 'CodeTest::Parser' do
       csv_str = 'john'
       headers = [:first_name, :last_name]
 
-      results = CodeTest::Parser.parse(csv_str, headers: headers)
+      results = CodeTest::Input.parse(csv_str, headers: headers)
       expect(results).to eql [{first_name: 'john', last_name: nil}]
     end
 
@@ -85,7 +85,7 @@ RSpec.describe 'CodeTest::Parser' do
       csv_str = 'john,extra'
       headers = [:first_name]
 
-      results = CodeTest::Parser.parse(csv_str, headers: headers)
+      results = CodeTest::Input.parse(csv_str, headers: headers)
       expect(results).to eql [{first_name: 'john'}]
     end
 
@@ -94,7 +94,7 @@ RSpec.describe 'CodeTest::Parser' do
       foo|bar
       CSV
 
-      results = CodeTest::Parser.parse(csv_str, delimiter: '|')
+      results = CodeTest::Input.parse(csv_str, delimiter: '|')
       expect(results).to eql(
         [
           ['foo', 'bar'],
@@ -107,7 +107,7 @@ RSpec.describe 'CodeTest::Parser' do
       foo bar
       CSV
 
-      results = CodeTest::Parser.parse(csv_str, delimiter: ' ')
+      results = CodeTest::Input.parse(csv_str, delimiter: ' ')
       expect(results).to eql(
         [
           ['foo', 'bar'],
@@ -119,7 +119,7 @@ RSpec.describe 'CodeTest::Parser' do
   context '.parse_from_file' do
     it 'reads from a filepath and parses it, defaulting to CSV' do
       sample_csv = File.join(File.dirname(__FILE__), 'fixtures/comma.txt')
-      result = CodeTest::Parser.parse_from_file(sample_csv)
+      result = CodeTest::Input.parse_from_file(sample_csv)
 
       expect(result).to eql(
         [
@@ -131,7 +131,7 @@ RSpec.describe 'CodeTest::Parser' do
 
     it 'reads from a filepath and parses it with an explicit delimiter and headers' do
       sample_pound = File.join(File.dirname(__FILE__), 'fixtures/pound.txt')
-      result = CodeTest::Parser.parse_from_file(sample_pound, {
+      result = CodeTest::Input.parse_from_file(sample_pound, {
         delimiter: '#',
         headers: [:first_name, :last_name]
       })
