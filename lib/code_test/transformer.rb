@@ -43,10 +43,7 @@ module CodeTest
       end
     end
 
-    class InvalidDateValue < StandardError
-    end
-
-    class InvalidSexValue < StandardError
-    end
+    class InvalidDateValue < StandardError; end
+    class InvalidSexValue < StandardError; end
   end
 end
