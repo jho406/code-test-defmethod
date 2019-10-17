@@ -9,8 +9,8 @@ module CodeTest
 
       records.map do |record|
         new_record = {}
-        record.each_pair do |k, v|
-          new_record[k] = yield k, v
+        record.each_pair do |key, value|
+          new_record[key] = yield key, value
         end
 
         new_record

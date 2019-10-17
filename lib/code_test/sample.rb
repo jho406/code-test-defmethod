@@ -45,8 +45,8 @@ module CodeTest
     end
 
     def import_input
-      all_records = FILES_HEADERS_AND_DELIMITERS.flat_map do |v|
-        file_name, headers, delimiter = v
+      all_records = FILES_HEADERS_AND_DELIMITERS.flat_map do |opts|
+        file_name, headers, delimiter = opts
 
         current_path = File.dirname(__FILE__)
         full_path = File.join(current_path, '../../input_files', file_name)
@@ -58,16 +58,16 @@ module CodeTest
     end
 
     def transform_records(records = [])
-      Transfomer.transform_each_value(records) do |k, v|
-        v = v.strip
+      Transfomer.transform_each_value(records) do |key, value|
+        value = value.strip
 
-        case k
+        case key
         when :sex
-          Transfomer.transform_sex(v)
+          Transfomer.transform_sex(value)
         when :dob
-          Transfomer.transform_date(v)
+          Transfomer.transform_date(value)
         else
-          v
+          value
         end
       end
     end
