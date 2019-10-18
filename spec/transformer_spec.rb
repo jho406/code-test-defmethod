@@ -45,7 +45,7 @@ RSpec.describe 'Transformer' do
       date = '000000'
       expect {
         CodeTest::Transformer.transform_date(date)
-      }.to raise_error(CodeTest::Transformer::InvalidDateValue)
+      }.to raise_error(CodeTest::Transformer::InvalidDateValueError, 'invalid date: 000000')
     end
 
     it 'parses a date' do
@@ -68,7 +68,7 @@ RSpec.describe 'Transformer' do
       sex = 'MMMMMMinvalid'
       expect {
         CodeTest::Transformer.transform_sex(sex)
-      }.to raise_error(CodeTest::Transformer::InvalidSexValue)
+      }.to raise_error(CodeTest::Transformer::InvalidSexValueError, 'invalid sex: mmmmmminvalid')
     end
 
     it 'transforms the values of "Male" or "M" to a fully worded word' do

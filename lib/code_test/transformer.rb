@@ -23,8 +23,8 @@ module CodeTest
       # So we are guarnteed that order of m d y
       value = value.gsub(/\D/, '-')
       Date.strptime(value, '%m-%d-%Y')
-    rescue ArgumentError
-      raise InvalidDateValue
+    rescue StandardError
+      raise InvalidDateValueError.new("invalid date: #{value}")
     end
 
     def transform_sex(value)
@@ -39,11 +39,11 @@ module CodeTest
       when 'f'
         'Female'
       else
-        raise InvalidSexValue
+        raise InvalidSexValueError.new("invalid sex: #{value}")
       end
     end
 
-    class InvalidDateValue < StandardError; end
-    class InvalidSexValue < StandardError; end
+    class InvalidDateValueError < StandardError; end
+    class InvalidSexValueError < StandardError; end
   end
 end
