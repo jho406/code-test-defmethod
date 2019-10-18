@@ -27,7 +27,7 @@ module CodeTest
       current_path = File.dirname(__FILE__)
       full_path = File.join(current_path, '../input_files', file_name)
 
-      Input.parse_from_file(full_path, headers: headers, delimiter: delimiter)
+      Input.parse_from_file(full_path, headers, delimiter)
     end
 
     transform_records(all_records)
