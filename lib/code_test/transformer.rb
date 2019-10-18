@@ -30,13 +30,9 @@ module CodeTest
     def transform_sex(value)
       value = value.downcase
       case value
-      when 'male'
+      when 'male', 'm'
         'Male'
-      when 'female'
-        'Female'
-      when 'm'
-        'Male'
-      when 'f'
+      when 'female', 'f'
         'Female'
       else
         raise InvalidSexValueError.new("invalid sex: #{value}")
