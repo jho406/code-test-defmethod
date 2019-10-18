@@ -5,26 +5,37 @@ RSpec.describe 'CodeTest::Input' do
   context '.parse' do
     it 'returns empty if called with empty str' do
       csv_str = ''
-      results = CodeTest::Input.parse(csv_str)
+      headers = [:title]
+      results = CodeTest::Input.parse(csv_str, headers)
       expect(results).to eql []
 
       csv_str = '   '
-      results = CodeTest::Input.parse(csv_str)
+      results = CodeTest::Input.parse(csv_str, headers)
       expect(results).to eql []
+    end
+
+    it 'returns an array of empty objects if there the headers are empty' do
+      csv_str = 'foo'
+      headers = []
+
+      results = CodeTest::Input.parse(csv_str, headers)
+      expect(results).to eql [{}]
     end
 
     it 'parses a csv line if passed a single row with a single column' do
       csv_str = 'foo'
+      headers = [:title]
 
-      results = CodeTest::Input.parse(csv_str)
-      expect(results).to eql [['foo']]
+      results = CodeTest::Input.parse(csv_str, headers)
+      expect(results).to eql [{title: 'foo'}]
     end
 
     it 'parses a csv line if passed a single line of csv' do
       csv_str = 'foo,bar'
+      headers = [:title, :body]
 
-      results = CodeTest::Input.parse(csv_str)
-      expect(results).to eql [['foo', 'bar']]
+      results = CodeTest::Input.parse(csv_str, headers)
+      expect(results).to eql [{title: 'foo', body: 'bar'}]
     end
 
     it 'parses multiple csv lines if passed a single column of multiple lines' do
@@ -33,11 +44,13 @@ RSpec.describe 'CodeTest::Input' do
       abc
       CSV
 
-      results = CodeTest::Input.parse(csv_str)
+      headers = [:title]
+
+      results = CodeTest::Input.parse(csv_str, headers)
       expect(results).to eql(
         [
-          ['foo'],
-          ['abc']
+          {title: 'foo'},
+          {title: 'abc'}
         ]
       )
     end
@@ -48,36 +61,22 @@ RSpec.describe 'CodeTest::Input' do
       abc,123
       CSV
 
-      results = CodeTest::Input.parse(csv_str)
+      headers = [:title, :body]
+
+      results = CodeTest::Input.parse(csv_str, headers)
       expect(results).to eql(
         [
-          ['foo', 'bar'],
-          ['abc', '123']
+          {title: 'foo', body: 'bar'},
+          {title: 'abc', body: '123'}
         ]
       )
-    end
-
-    it 'parses as multiple lines of arrays when passes a bad headers' do
-      csv_str = 'foo'
-      headers = 'invalid'
-
-      results = CodeTest::Input.parse(csv_str, headers: headers)
-      expect(results).to eql [['foo']]
-    end
-
-    it 'parses as lines of hashes when passes headers' do
-      csv_str = 'john'
-      headers = [:first_name]
-
-      results = CodeTest::Input.parse(csv_str, headers: headers)
-      expect(results).to eql [{first_name: 'john'}]
     end
 
     it 'leaves the values as nil if there are not enough rows' do
       csv_str = 'john'
       headers = [:first_name, :last_name]
 
-      results = CodeTest::Input.parse(csv_str, headers: headers)
+      results = CodeTest::Input.parse(csv_str, headers)
       expect(results).to eql [{first_name: 'john', last_name: nil}]
     end
 
@@ -85,7 +84,7 @@ RSpec.describe 'CodeTest::Input' do
       csv_str = 'john,extra'
       headers = [:first_name]
 
-      results = CodeTest::Input.parse(csv_str, headers: headers)
+      results = CodeTest::Input.parse(csv_str, headers)
       expect(results).to eql [{first_name: 'john'}]
     end
 
@@ -93,11 +92,12 @@ RSpec.describe 'CodeTest::Input' do
       csv_str = <<~PIPE
       foo|bar
       PIPE
+      headers = [:title, :body]
 
-      results = CodeTest::Input.parse(csv_str, delimiter: '|')
+      results = CodeTest::Input.parse(csv_str, headers, '|')
       expect(results).to eql(
         [
-          ['foo', 'bar'],
+          {title: 'foo', body: 'bar'}
         ]
       )
     end
@@ -106,11 +106,12 @@ RSpec.describe 'CodeTest::Input' do
       csv_str = <<~SPACE
       foo bar
       SPACE
+      headers = [:title, :body]
 
-      results = CodeTest::Input.parse(csv_str, delimiter: ' ')
+      results = CodeTest::Input.parse(csv_str, headers, ' ')
       expect(results).to eql(
         [
-          ['foo', 'bar']
+          {title: 'foo', body: 'bar'}
         ]
       )
     end
@@ -119,27 +120,28 @@ RSpec.describe 'CodeTest::Input' do
   context '.parse_from_file' do
     it 'reads from a filepath and parses it, defaulting to CSV' do
       sample_csv = File.join(File.dirname(__FILE__), 'fixtures/comma.txt')
-      result = CodeTest::Input.parse_from_file(sample_csv)
+      headers = [:title, :body]
+      result = CodeTest::Input.parse_from_file(sample_csv, headers)
 
       expect(result).to eql(
         [
-          ['john', 'smith'],
-          ['jason', 'smithers']
+          {title: 'john', body: 'smith'},
+          {title: 'jason', body: 'smithers'}
         ]
       )
     end
 
-    it 'reads from a filepath and parses it with an explicit delimiter and headers' do
+    it 'reads from a filepath and parses it with an explicit delimiter' do
       sample_pound = File.join(File.dirname(__FILE__), 'fixtures/pound.txt')
-      result = CodeTest::Input.parse_from_file(sample_pound, {
-        delimiter: '#',
-        headers: [:first_name, :last_name]
-      })
+      headers = [:title, :body]
+      result = CodeTest::Input.parse_from_file(
+        sample_pound, headers, '#'
+      )
 
       expect(result).to eql(
         [
-          {first_name: 'john', last_name: 'smith'},
-          {first_name: 'jason', last_name: 'smithers'}
+          {title: 'john', body: 'smith'},
+          {title: 'jason', body: 'smithers'}
         ]
       )
     end
