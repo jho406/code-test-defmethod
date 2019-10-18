@@ -41,7 +41,7 @@ RSpec.describe 'Transformer' do
   end
 
   context '.transform_date' do
-    it 'Raises invalid sex if sex is not valid' do
+    it 'raises invalid date if date is not valid' do
       date = '000000'
       expect {
         CodeTest::Transformer.transform_date(date)
@@ -64,7 +64,7 @@ RSpec.describe 'Transformer' do
   end
 
   context '.transform_sex' do
-    it 'Raises invalid sex if sex is not valid' do
+    it 'raises invalid sex if sex is not valid' do
       sex = 'MMMMMMinvalid'
       expect {
         CodeTest::Transformer.transform_sex(sex)

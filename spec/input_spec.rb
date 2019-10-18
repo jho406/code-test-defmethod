@@ -14,7 +14,7 @@ RSpec.describe 'CodeTest::Input' do
       expect(results).to eql []
     end
 
-    it 'returns an array of empty objects if there the headers are empty' do
+    it 'returns an array of empty objects if the headers are empty' do
       csv_str = 'foo'
       headers = []
 
