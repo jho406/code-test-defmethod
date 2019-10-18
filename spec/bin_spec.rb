@@ -1,5 +1,4 @@
 require 'rspec'
-require 'byebug'
 
 RSpec.describe 'bin/run' do
   it 'shows the correct output from the code test' do
