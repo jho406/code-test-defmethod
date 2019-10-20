@@ -21,15 +21,16 @@ module CodeTest
       # From requirements:
       # Dates are represented in American format (month, day, year).
       # So we are guarnteed that order of m d y
-      value = value.gsub(/\D/, '-')
-      Date.strptime(value, '%m-%d-%Y')
+
+      date_str = value.gsub(/\D/, '-')
+      Date.strptime(date_str, '%m-%d-%Y')
     rescue StandardError
       raise InvalidDateValueError.new("invalid date: #{value}")
     end
 
     def transform_sex(value)
-      value = value.downcase
-      case value
+      gender_str = value.downcase
+      case gender_str
       when 'male', 'm'
         'Male'
       when 'female', 'f'

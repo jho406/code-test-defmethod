@@ -68,7 +68,7 @@ RSpec.describe 'Transformer' do
       sex = 'MMMMMMinvalid'
       expect {
         CodeTest::Transformer.transform_sex(sex)
-      }.to raise_error(CodeTest::Transformer::InvalidSexValueError, 'invalid sex: mmmmmminvalid')
+      }.to raise_error(CodeTest::Transformer::InvalidSexValueError, 'invalid sex: MMMMMMinvalid')
     end
 
     it 'transforms the values of "Male" or "M" to a fully worded word' do
