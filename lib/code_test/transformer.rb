@@ -24,7 +24,7 @@ module CodeTest
 
       date_str = value.gsub(/\D/, '-')
       Date.strptime(date_str, '%m-%d-%Y')
-    rescue StandardError
+    rescue
       raise InvalidDateValueError.new("invalid date: #{value}")
     end
 
